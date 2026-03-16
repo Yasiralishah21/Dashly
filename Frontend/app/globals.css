@@ -1,0 +1,311 @@
+@import "tailwindcss";
+
+/* Class-based dark mode so the header theme toggle works (Tailwind v4 defaults to prefers-color-scheme) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafc;
+  /* --background: #ffffff; */
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --ring: #6366f1;
+}
+
+.dark,
+[data-theme="dark"] {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --border: #334155;
+  --ring: #818cf8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--background);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  /* background: radial-gradient(circle at 20% 20%, #c7d2fe 0%, transparent 40%),
+  radial-gradient(circle at 80% 30%, #e9d5ff 0%, transparent 40%),
+  radial-gradient(circle at 50% 80%, #ddd6fe 0%, transparent 40%),
+  #f8fafc;
+  z-index: -1; */
+
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, #c7d2fe 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #e9d5ff 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #ddd6fe 0%, transparent 40%),
+    #f8fafc !important;
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ---- Page load: fade-in + slight slide up for main content ---- */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-page-enter {
+  animation: page-enter 0.4s ease-out forwards;
+}
+
+/* ---- Card hover: subtle scale and shadow (dashboard cards, widgets) ---- */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+}
+.dark .card-hover:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Task completion: checkmark appears with a short fade + scale ---- */
+.task-check-mark {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.task-check-mark.task-done {
+  opacity: 1;
+  transform: scale(1);
+}
+.task-check-mark.task-pending {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* ---- Quick-add chip: pulse when just selected ---- */
+@keyframes chip-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+.chip-pulse {
+  animation: chip-pulse 0.4s ease-out;
+}
+
+/* ---- Theme toggle: smooth transition when switching light/dark ---- */
+.theme-transition {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+/* ---- Celebration: confetti falls from top (smooth, 3D look, button colors) ---- */
+@keyframes celebration-fall {
+  0% {
+    transform: translateY(-8px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.15;
+  }
+}
+.celebration-piece {
+  position: fixed;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 99999;
+  animation: celebration-fall 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform;
+  /* 3D depth: soft shadow + slight highlight */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Chart container responsive */
+.chart-container {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+}
+
+/* Empty state entry animation: fade in + scale 0.95 → 1 */
+@keyframes empty-state-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.empty-state-in {
+  animation: empty-state-in 0.4s ease-out forwards;
+}
+
+/* Quick-add marquee: GPU-friendly, no JS. One row scrolls left, one right. */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.marquee-track-left {
+  display: inline-flex;
+  width: max-content;
+  animation: marquee-left 180s linear infinite;
+  will-change: transform;
+}
+.marquee-track-right {
+  display: inline-flex;
+  width: max-content;
+  animation: marquee-right 200s linear infinite;
+  will-change: transform;
+}
+.marquee-row {
+  overflow: hidden;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+/* Pause when row is hovered (class toggled by JS for reliable hover) */
+.marquee-track.marquee-paused {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-left,
+  .marquee-track-right {
+    animation: none;
+  }
+}
+
+
+
+.gradient-btn {
+  background: 
+    radial-gradient(circle at 10% 20%, rgb(156, 176, 255) 0%, transparent 35%),
+    radial-gradient(circle at 90% 30%, rgb(208, 173, 245) 0%, transparent 35%),
+    radial-gradient(circle at 50% 90%, rgb(187, 172, 255) 0%, transparent 35%),
+    #f1f5f9;
+  transition: background 0.3s ease; /* smooth fade */
+}
+
+.gradient-btn:hover {
+  background:     
+  radial-gradient(circle at 10% 20%, rgb(106, 135, 248) 0%, transparent 35%),
+  radial-gradient(circle at 90% 30%, rgb(137, 88, 189) 0%, transparent 35%),
+  radial-gradient(circle at 50% 90%, rgb(127, 109, 210) 0%, transparent 35%),
+  #f1f5f9;
+transition: background 0.3s ease; /* smooth fade */; /* full replacement */
+}
+
+/* Your button styling: primary (gradient) and secondary (bordered) */
+.btn-primary {
+  background:
+    radial-gradient(circle at 10% 20%, rgb(156, 176, 255) 0%, transparent 35%),
+    radial-gradient(circle at 90% 30%, rgb(208, 173, 245) 0%, transparent 35%),
+    radial-gradient(circle at 50% 90%, rgb(187, 172, 255) 0%, transparent 35%),
+    #f1f5f9;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 500;
+  color: #0f172a;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background:
+    radial-gradient(circle at 10% 20%, rgb(106, 135, 248) 0%, transparent 35%),
+    radial-gradient(circle at 90% 30%, rgb(137, 88, 189) 0%, transparent 35%),
+    radial-gradient(circle at 50% 90%, rgb(127, 109, 210) 0%, transparent 35%),
+    #f1f5f9;
+  transform: scale(0.95);
+}
+.btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #6366f1;
+}
+.btn-secondary {
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 500;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+  transition: transform 0.3s ease, background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: #e2e8f0;
+  transform: scale(0.95);
+}
+.btn-secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #6366f1;
+}
+.dark .btn-secondary,
+.dark .btn-secondary:hover {
+  border-color: #475569;
+  background: #1e293b;
+  color: #e2e8f0;
+}
+.dark .btn-secondary:hover {
+  background: #334155;
+}
+.dark .btn-primary:focus,
+.dark .btn-secondary:focus {
+  box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px #818cf8;
+}
+
+.signup-style {
+  background: 
+  radial-gradient(circle at 10% 20%, rgb(156, 176, 255) 0%, transparent 35%),
+  radial-gradient(circle at 90% 30%, rgb(208, 173, 245) 0%, transparent 35%),
+  radial-gradient(circle at 50% 90%, rgb(187, 172, 255) 0%, transparent 35%),
+  #f1f5f9;
+transition: background 0.3s ease; /* smooth fade */
+}
+
+.signup-style:hover {
+  scale: 1.05;
+  transition: scale 1s ease;
+}

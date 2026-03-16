@@ -1,0 +1,15 @@
+LIST OF ALL THE APIs WE HAVE USED :
+1. OPENAI APPI (https://platform.openai.com/usage) 
+2. OPENWEATHERAPI (https://home.openweathermap.org/api_keys)
+3. ZENQUOTES.IO (https://zenquotes.io/api/random)
+4. NEWSAPI.ORG (https://newsapi.org/register/success)
+
+
+
+APIs used in the project (short list):
+Tasks API (/api/tasks, /api/tasks/[id]) — Manage tasks (create, read, update, delete, mark complete).
+AI Tasks API (/api/ai-tasks) — Provide suggested tasks for productivity.
+Stats API (/api/stats) — Calculate dashboard statistics (total, completed, pending tasks).
+Weather API (/api/weather) — Show current weather in dashboard widget.
+News API (/api/news) — Display latest news headlines.
+Quote API (/api/quote) — Show motivational quote on the dashboard.
