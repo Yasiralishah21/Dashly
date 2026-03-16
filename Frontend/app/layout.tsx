@@ -5,8 +5,6 @@ import { SidebarProvider } from "@/context/SidebarContext";
 import { TasksProvider } from "@/context/TasksContext";
 import { AuthProvider } from "@/context/AuthContext";
 import Sidebar from "@/components/layout/Sidebar";
-import Header from "@/components/layout/Header";
-import HeaderWrapper from "@/components/layout/HeaderWrapper";
 import AuthLayout from "@/components/layout/AuthLayout";
 import "./globals.css";
 
@@ -49,7 +47,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('theme');var d=document.documentElement;var m=window.matchMedia('(prefers-color-scheme:dark)');if(t==='dark'||(t!='light'&&m.matches)){d.classList.add('dark');d.setAttribute('data-theme','dark');}else{d.classList.add('light');d.setAttribute('data-theme','light');}})();`,
+            __html: `(function(){var t=localStorage.getItem('theme');var d=document.documentElement;var m=window.matchMedia('(prefers-color-scheme:dark)');if(t==='dark'||(t==='system'&&m.matches)){d.classList.add('dark');d.setAttribute('data-theme','dark');}else{d.classList.add('light');d.setAttribute('data-theme','light');}})();`,
           }}
         />
       </head>
@@ -70,7 +68,6 @@ export default function RootLayout({
                   <div className="theme-transition flex min-h-screen min-h-[100dvh] w-full min-w-0 dark:bg-slate-950">
                     <Sidebar />
                     <main className="min-w-0 flex-1 lg:ml-64">
-                      <HeaderWrapper />
                       {children}
                     </main>
                   </div>

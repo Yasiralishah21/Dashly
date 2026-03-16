@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 import { useTasks } from "@/context/TasksContext";
+import { useTheme } from "@/context/ThemeContext";
+import { useAuth } from "@/context/AuthContext";
 import { formatDueDate } from "@/lib/dateUtils";
 import { getCategoryById } from "@/lib/categories";
 import { playTaskDoneSound } from "@/lib/taskDoneSound";
@@ -33,6 +35,17 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { open, setOpen } = useSidebar();
   const { phase, tasks, toggleTask } = useTasks();
+  const { setTheme, resolvedTheme } = useTheme();
+  const { logout } = useAuth();
+  const isDark = resolvedTheme === "dark";
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleLogoutClick = () => setShowLogoutConfirm(true);
+  const handleLogoutConfirm = () => {
+    setShowLogoutConfirm(false);
+    logout();
+  };
+  const handleLogoutCancel = () => setShowLogoutConfirm(false);
 
   // On mobile, close the sidebar when the user navigates to a new page.
   useEffect(() => setOpen(false), [pathname, setOpen]);
@@ -187,8 +200,68 @@ export default function Sidebar() {
           )}
         </nav>
 
-        {/* Settings at bottom */}
-        <div className="border-t border-slate-200 p-4 dark:border-slate-700">
+        {/* Settings at bottom: theme, logout */}
+        <div className="border-t border-slate-200 p-4 space-y-1 dark:border-slate-700">
+          <button
+            type="button"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDark ? (
+              <svg className="h-5 w-5 shrink-0 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5 shrink-0 text-purple-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            )}
+            {isDark ? "Light mode" : "Dark mode"}
+          </button>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={handleLogoutClick}
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+            >
+              <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Log out
+            </button>
+            {showLogoutConfirm && (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  aria-hidden
+                  onClick={handleLogoutCancel}
+                />
+                <div className="absolute left-0 bottom-full z-50 mb-2 w-56 rounded-lg border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-600 dark:bg-slate-800">
+                  <p className="mb-3 text-sm font-medium text-slate-800 dark:text-slate-200">
+                    Are you sure?
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={handleLogoutConfirm}
+                      className="btn-primary flex-1 px-3 py-1.5 text-sm"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleLogoutCancel}
+                      className="btn-secondary flex-1 px-3 py-1.5 text-sm"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
           <Link
             href="/settings"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"

@@ -13,14 +13,14 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<Theme>("light");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
 
-  // On first load, read saved theme from localStorage.
+  // On first load, read saved theme from localStorage (default: light).
   useEffect(() => {
     setMounted(true);
-    const saved = (localStorage.getItem("theme") as Theme) || "system";
+    const saved = (localStorage.getItem("theme") as Theme) || "light";
     setThemeState(saved);
   }, []);
 

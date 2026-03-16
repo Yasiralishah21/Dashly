@@ -65,16 +65,16 @@ export default function LoginPage() {
       </Link>
 
       <div className="w-full signup-style max-w-sm min-w-0 rounded-xl bg-white p-4 shadow-lg sm:p-6 dark:border-slate-700 dark:bg-slate-800">
-        <h1 className="text-center text-lg font-semibold text-slate-900 dark:text-white sm:text-xl">
+        <h1 className="text-center text-lg font-semibold text-slate-900 dark:text-slate-800 sm:text-xl">
           {isSignUp ? "Sign up" : "Sign in"}
         </h1>
-        <p className="mt-1 text-center text-xs text-slate-500 sm:text-sm dark:text-slate-400">
-          Demo: abcdef / 123456
+        <p className="mt-1 text-center text-xs text-slate-500 sm:text-sm dark:text-slate-600">
+          Demo: YasirAli / 123456
         </p>
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4 sm:mt-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+            <label htmlFor="username" className="block text-sm font-medium text-slate-700 dark:text-slate-800">
               Username or email
             </label>
             <input
@@ -87,7 +87,7 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-800">
               Password
             </label>
             <input

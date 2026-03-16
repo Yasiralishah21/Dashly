@@ -186,7 +186,7 @@ export default function Home() {
     return (
       <div className="flex min-h-[60vh] flex-col items-center gap-6 px-4 py-12">
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
-          E nter your daily tasks
+          Enter your daily tasks
         </h2>
         <div className="w-full max-w-md space-y-3">
           <div className="flex gap-2">
