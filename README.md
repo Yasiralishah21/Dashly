@@ -4,7 +4,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Yasiralishah21/Dashly)](https://github.com/Yasiralishah21/Dashly/network) 
 [![GitHub stars](https://img.shields.io/github/stars/Yasiralishah21/Dashly)](https://github.com/Yasiralishah21/Dashly/stargazers)
 
-**Dashly** is a full-stack productivity dashboard built with **MERN (MongoDB, Express.js, React.js, Node.js)**. It helps users manage tasks efficiently with a modern, interactive interface.
+**Dashly** is a full-stack productivity dashboard built with **(Postgresql, Express.js, Next.js, Node.js)**. It helps users manage tasks efficiently with a modern, interactive interface.
 
 ---
 
@@ -13,9 +13,9 @@
 - User authentication (Sign Up / Sign In)
 - Add, update, delete tasks
 - Categorize tasks for better organization
-- Responsive UI with React.js + Tailwind CSS
+- Responsive UI with Next.js + Tailwind CSS
 - REST API backend with Node.js & Express.js
-- Database: MongoDB
+- Database: Postgresql
 - Environment variables managed securely via `.env`
 
 ---
@@ -24,7 +24,7 @@
 
 
 Dashly/
-├─ Frontend/ # React.js frontend
+├─ Frontend/ # Next.js frontend
 ├─ Backend/ # Node.js + Express backend
 ├─ README.md
 
@@ -33,9 +33,9 @@ Dashly/
 
 ## 🛠️ Technologies Used
 
-**Frontend:** React.js, Tailwind CSS, React Router  
-**Backend:** Node.js, Express.js, MongoDB, Mongoose  
-**Tools:** Git, VS Code, Postman  
+**Frontend:** Next.js, Tailwind CSS  
+**Backend:** Node.js, Express.js, Postgresql  
+**Tools:** Git, VS Code
 **Version Control:** Git + GitHub  
 
 ---
@@ -61,12 +61,6 @@ Frontend runs on: http://localhost:3000
 
 Backend API runs on: http://localhost:5000
 
-📸 Screenshots / Demo
-
-(Add screenshots or a GIF of your dashboard here for a polished look)
-
-
-
 
 📝 Notes
 
@@ -81,10 +75,7 @@ Optionally include a .env.example to show placeholders for variables.
 Yasir Ali
 
 GitHub: https://github.com/Yasiralishah21
-
-LinkedIn: (add your LinkedIn profile)
-
-Portfolio: (add if you have one)
+Portfolio: https://yasiralishah-portfolio.netlify.app
 
 ⭐ Contribution
 
