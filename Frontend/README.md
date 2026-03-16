@@ -1,4 +1,4 @@
-# AI Productivity Dashboard (YasAI)
+# Dashly
 
 A Next.js 14+ productivity app with login, task management, weather, news, and stats. Built with React, TypeScript, and Tailwind CSS.
 
@@ -18,7 +18,7 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000). 
-Demo login: **abcdef** / **123456**.
+Demo login: **YasirAli** / **123456**.
 
 ```bash
 npm run build
