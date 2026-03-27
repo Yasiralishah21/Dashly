@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 
-// Chart is loaded only on the client to avoid SSR issues with chart libraries.
+// Chart is loaded only on the client to avoid SSR issues with chart libraries ...
 const TasksChart = dynamic(() => import("@/components/stats/TasksChart"), {
   loading: () => (
     <div className="flex h-64 items-center justify-center rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800/50">
